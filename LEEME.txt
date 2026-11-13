@@ -1,0 +1,15 @@
+MI PULPERÍA — VERSIÓN INSTALABLE
+
+Contenido:
+- index.html: tu aplicación con el soporte de instalación añadido.
+- manifest.webmanifest: nombre, colores e iconos de la aplicación.
+- sw.js: archivo necesario para que el navegador permita instalarla.
+- icons/: iconos de Mi Pulpería.
+
+IMPORTANTE:
+1. No abras index.html desde Descargas para instalarla. Debe publicarse en una dirección HTTPS.
+2. Esta versión conserva la conexión Firebase que ya estaba configurada en el archivo.
+3. Después de publicarla, agrega el dominio HTTPS asignado por el proveedor en:
+   Firebase Console > Authentication > Configuración > Dominios autorizados.
+4. El modo instalable no reemplaza las copias de seguridad. Mantén respaldo de tus datos.
+5. Las fotos siguen guardándose dentro de los datos de la aplicación; Firebase Storage no se integra en este paquete.

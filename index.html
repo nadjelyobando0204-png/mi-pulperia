@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#176b52">
+<title>Mi Pulpería</title>
+<style>
+:root{--green:#176b52;--green2:#e8f4ef;--ink:#17251f;--muted:#66756e;--line:#e3eae6;--bg:#f5f8f6;--white:#fff;--red:#b93838;--amber:#a66b10;--shadow:0 8px 24px rgba(20,50,38,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{background:#123f33;color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:22px}.brand{display:flex;align-items:center;gap:11px;padding:0 8px}.brand-icon{width:42px;height:42px;border-radius:13px;background:#e3f3eb;color:#176b52;display:grid;place-items:center;font-size:23px}.brand h1{font-size:19px;margin:0}.brand small{color:#b7d1c6}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#d5e6df;text-align:left;padding:11px 12px;border-radius:10px;display:flex;gap:12px;align-items:center}.nav button.active,.nav button:hover{background:#245a49;color:#fff}.nav .ico{width:22px;text-align:center;font-size:17px}.side-note{margin-top:auto;color:#c0d6cc;font-size:12px;padding:12px}
+main{min-width:0;padding:26px clamp(16px,3vw,38px) 50px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:24px}.topbar h2{margin:0;font-size:25px}.top-actions{display:flex;gap:8px;align-items:center}.pill{background:var(--green2);color:var(--green);border-radius:30px;padding:7px 12px;font-size:12px;font-weight:700}
+.page{display:none}.page.active{display:block}.muted{color:var(--muted)}.small{font-size:12px}.grid{display:grid;gap:14px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:18px}.card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:var(--shadow)}.stat-label{font-size:13px;color:var(--muted)}.stat-value{font-size:25px;font-weight:750;margin-top:6px}.stat-foot{font-size:12px;color:var(--muted);margin-top:3px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 12px}.section-head h3{margin:0;font-size:17px}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 13px;border-radius:10px;font-weight:650}.btn.primary{background:var(--green);color:#fff;border-color:var(--green)}.btn.danger{color:var(--red);border-color:#f0d4d4}.btn.smallbtn{padding:6px 9px;font-size:12px}.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;align-items:center;gap:9px}.between{display:flex;justify-content:space-between;align-items:center;gap:12px}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px}.field{display:grid;gap:5px;margin-bottom:12px}.field label{font-size:13px;font-weight:650;color:#41534a}.field input,.field select,.field textarea,.toolbar input,.toolbar select{width:100%;padding:10px 11px;border:1px solid #dce5df;border-radius:10px;background:#fff;color:var(--ink);outline:none}.field input:focus,.field select:focus,.field textarea:focus,.toolbar input:focus{border-color:#6aa68d;box-shadow:0 0 0 3px #e6f2ec}.toolbar input{max-width:320px}.toolbar select{width:auto;min-width:150px}
+.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid #edf1ee;font-size:13px}th{color:var(--muted);font-weight:700;background:#fbfcfb}tr:last-child td{border-bottom:0}.product-cell{display:flex;align-items:center;gap:10px}.thumb{width:40px;height:40px;object-fit:cover;border-radius:9px;background:#eef3ef}.tag{display:inline-block;padding:4px 8px;border-radius:20px;background:#edf4f0;color:#38634f;font-size:11px;font-weight:700}.tag.warn{background:#fff4dc;color:#946313}.tag.red{background:#fdecec;color:#a72d2d}
+.two{grid-template-columns:1.25fr .75fr}.three{grid-template-columns:repeat(3,1fr)}.empty{text-align:center;padding:35px;color:var(--muted)}.empty b{display:block;color:var(--ink);margin-bottom:5px}
+.modal-back{position:fixed;inset:0;background:#0d211bb0;display:none;align-items:center;justify-content:center;padding:15px;z-index:20}.modal-back.open{display:flex}.modal{background:#fff;width:min(680px,100%);max-height:92vh;overflow:auto;border-radius:18px;padding:22px;box-shadow:0 20px 70px #0003}.modal h3{margin:0 0 17px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 13px}.span2{grid-column:1/-1}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.photo-preview{width:76px;height:76px;border-radius:12px;object-fit:cover;background:#eef3ef;border:1px dashed #b8c9bf}
+.notice{padding:12px 14px;border-radius:12px;background:#eef6f1;color:#315b48;font-size:13px}.notice.warn{background:#fff5e2;color:#825b17}.amount{font-variant-numeric:tabular-nums;font-weight:700}.positive{color:#18744f}.negative{color:#b93838}.actions{display:flex;gap:6px;flex-wrap:wrap}.sale-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:15px}.sale-total{font-size:28px;font-weight:800;color:var(--green)}.cart-line{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.cart-line:last-child{border:0}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.quick button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px;text-align:left}.quick button b{display:block;margin-top:6px}.footer-note{font-size:12px;color:var(--muted);margin-top:12px}
+@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{padding:12px;gap:10px}.brand{padding:3px 5px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:9px 11px}.side-note{display:none}main{padding:19px 14px 35px}.stats{grid-template-columns:repeat(2,1fr)}.two,.sale-layout{grid-template-columns:1fr}}
+@media(max-width:540px){.topbar{align-items:flex-start;flex-direction:column}.form-grid{grid-template-columns:1fr}.span2{grid-column:auto}.stats{gap:9px}.card{padding:13px}.stat-value{font-size:21px}.quick{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#176b52">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+\n</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-icon">🛒</div><div><h1>Mi Pulpería</h1><small>Administración del negocio</small></div></div>
+  <nav class="nav" id="nav">
+    <button class="active" data-page="inicio"><span class="ico">⌂</span>Inicio</button>
+    <button data-page="inventario"><span class="ico">▦</span>Inventario</button>
+    <button data-page="ventas"><span class="ico">🛍</span>Punto de venta</button>
+    <button data-page="fiados"><span class="ico">👥</span>Clientes fiados</button>
+    <button data-page="caja"><span class="ico">▣</span>Control de caja</button>
+    <button data-page="gastos"><span class="ico">↗</span>Salidas de dinero</button>
+    <button data-page="reportes"><span class="ico">▤</span>Reportes</button>
+    <button data-page="respaldo"><span class="ico">☁</span>Google y respaldo</button>
+  </nav>
+  <div class="side-note">Tus registros se guardan en este dispositivo. Activa un respaldo periódico desde Google o descarga una copia.</div>
+</aside>
+<main>
+  <header class="topbar"><div><div class="muted small" id="today"></div><h2 id="pageTitle">Resumen del negocio</h2></div><div class="top-actions"><span class="pill">Moneda: C$ Córdoba</span></div></header>
+
+  <section class="page active" id="page-inicio">
+    <div class="grid stats">
+      <div class="card"><div class="stat-label">Productos registrados</div><div class="stat-value" id="sProducts">0</div><div class="stat-foot">En tu inventario</div></div>
+      <div class="card"><div class="stat-label">Valor del inventario</div><div class="stat-value" id="sStock">C$ 0</div><div class="stat-foot">A precio de compra</div></div>
+      <div class="card"><div class="stat-label">Total por cobrar</div><div class="stat-value" id="sCredit">C$ 0</div><div class="stat-foot">Fiados pendientes</div></div>
+      <div class="card"><div class="stat-label">Efectivo estimado en caja</div><div class="stat-value" id="sCash">C$ 0</div><div class="stat-foot">Según movimientos registrados</div></div>
+    </div>
+    <div class="grid two">
+      <div class="card"><div class="section-head"><h3>Accesos rápidos</h3></div><div class="quick">
+        <button onclick="openProduct()"><span>📦</span><b>Agregar producto</b><span class="small muted">Registrar mercancía</span></button>
+        <button onclick="go('ventas')"><span>🛍</span><b>Nueva venta</b><span class="small muted">Cobrar al cliente</span></button>
+        <button onclick="openCustomer()"><span>👤</span><b>Nuevo cliente</b><span class="small muted">Controlar fiados</span></button>
+        <button onclick="openExpense()"><span>💸</span><b>Registrar salida</b><span class="small muted">Gasto o retiro</span></button>
+      </div></div>
+      <div class="card"><div class="section-head"><h3>Alertas de existencias</h3><button class="btn smallbtn" onclick="go('inventario')">Ver inventario</button></div><div id="lowStock"></div></div>
+    </div>
+    <div class="section-head"><h3>Movimientos recientes</h3></div><div class="card" id="recent"></div>
+  </section>
+
+  <section class="page" id="page-inventario">
+    <div class="section-head"><h3>Productos</h3><button class="btn primary" onclick="openProduct()">＋ Agregar producto</button></div>
+    <div class="toolbar"><input id="productSearch" placeholder="Buscar por nombre o código..." oninput="renderProducts()"><select id="categoryFilter" onchange="renderProducts()"><option value="">Todas las categorías</option></select></div>
+    <div class="table-wrap"><table><thead><tr><th>Producto</th><th>Categoría</th><th>Existencia</th><th>Compra</th><th>Venta</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="productsBody"></tbody></table></div>
+  </section>
+
+  <section class="page" id="page-ventas">
+    <div class="section-head"><h3>Punto de venta</h3><span class="tag">Nueva venta</span></div>
+    <div class="sale-layout">
+      <div class="card">
+        <div class="field"><label>Buscar producto</label><input id="saleSearch" placeholder="Escribe el nombre o código..." oninput="renderSaleChoices()"></div>
+        <div id="saleChoices" class="grid three"></div>
+      </div>
+      <div class="card">
+        <div class="between"><h3 style="margin:0">Detalle de compra</h3><button class="btn smallbtn" onclick="clearCart()">Vaciar</button></div>
+        <div id="cartLines" style="margin-top:10px"></div>
+        <div class="between" style="margin-top:14px"><span class="muted">Total</span><span class="sale-total" id="cartTotal">C$ 0.00</span></div>
+        <div class="field" style="margin-top:15px"><label>Forma de pago</label><select id="payType" onchange="togglePayFields()"><option value="cash">Efectivo</option><option value="credit">Fiado</option><option value="partial">Abono + fiado</option></select></div>
+        <div class="field" id="customerField" style="display:none"><label>Cliente</label><select id="saleCustomer"></select></div>
+        <div class="field" id="paidField" style="display:none"><label>Abono recibido (C$)</label><input id="paidAmount" type="number" min="0" step=".01" value="0"></div>
+        <div class="field" id="cashReceivedField"><label>Dinero recibido (C$)</label><input id="cashReceived" type="number" min="0" step=".01" placeholder="Monto recibido"></div>
+        <div class="between small"><span class="muted">Cambio</span><b id="changeDue">C$ 0.00</b></div>
+        <button class="btn primary" style="width:100%;margin-top:14px" onclick="finishSale()">Guardar venta</button>
+        <div class="footer-note">El inventario se descuenta al guardar la venta. En ventas fiadas se registra el saldo del cliente.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="page-fiados">
+    <div class="section-head"><h3>Clientes y cuentas por cobrar</h3><button class="btn primary" onclick="openCustomer()">＋ Nuevo cliente</button></div>
+    <div class="grid stats" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="card"><div class="stat-label">Saldo total pendiente</div><div class="stat-value" id="creditTotal">C$ 0</div></div><div class="card"><div class="stat-label">Clientes con saldo</div><div class="stat-value" id="creditCount">0</div></div></div>
+    <div class="toolbar"><input id="customerSearch" placeholder="Buscar cliente..." oninput="renderCustomers()"></div>
+    <div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Teléfono</th><th>Saldo pendiente</th><th>Acciones</th></tr></thead><tbody id="customersBody"></tbody></table></div>
+    <div class="section-head"><h3>Historial de fiados y abonos</h3></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Cliente</th><th>Movimiento</th><th>Importe</th><th>Detalle</th></tr></thead><tbody id="creditHistory"></tbody></table></div>
+  </section>
+
+  <section class="page" id="page-caja">
+    <div class="section-head"><h3>Control y cierre de caja</h3><div class="actions"><button class="btn" onclick="setOpening()">Definir saldo inicial</button><button class="btn primary" onclick="openClose()">＋ Cerrar caja del día</button></div></div>
+    <div class="grid stats"><div class="card"><div class="stat-label">Saldo inicial de hoy</div><div class="stat-value" id="cashOpening">C$ 0</div></div><div class="card"><div class="stat-label">Entradas en efectivo</div><div class="stat-value" id="cashIn">C$ 0</div></div><div class="card"><div class="stat-label">Salidas de caja</div><div class="stat-value" id="cashOut">C$ 0</div></div><div class="card"><div class="stat-label">Saldo esperado</div><div class="stat-value" id="cashExpected">C$ 0</div></div></div>
+    <div class="notice">El saldo de caja incluye ventas cobradas en efectivo y abonos recibidos; descuenta compras de mercadería pagadas, gastos externos y retiros de la dueña. Las ventas fiadas no se cuentan como efectivo.</div>
+    <div class="section-head"><h3>Historial de cierres</h3></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Saldo esperado</th><th>Dinero contado</th><th>Diferencia</th><th>Nota</th></tr></thead><tbody id="closesBody"></tbody></table></div>
+    <div class="section-head"><h3>Movimientos de caja</h3></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Concepto</th><th>Tipo</th><th>Importe</th></tr></thead><tbody id="cashMoves"></tbody></table></div>
+  </section>
+
+  <section class="page" id="page-gastos">
+    <div class="section-head"><h3>Salidas de dinero</h3><button class="btn primary" onclick="openExpense()">＋ Registrar salida</button></div>
+    <div class="grid three">
+      <div class="card"><div class="stat-label">Inversión en productos</div><div class="stat-value" id="expStock">C$ 0</div></div>
+      <div class="card"><div class="stat-label">Gastos externos</div><div class="stat-value" id="expExternal">C$ 0</div></div>
+      <div class="card"><div class="stat-label">Retiros de la dueña</div><div class="stat-value" id="expOwner">C$ 0</div></div>
+    </div>
+    <div class="section-head"><h3>Historial de salidas</h3></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Categoría</th><th>Descripción</th><th>Importe</th><th>Acción</th></tr></thead><tbody id="expensesBody"></tbody></table></div>
+  </section>
+
+  <section class="page" id="page-reportes">
+    <div class="section-head"><h3>Resumen y reportes</h3><button class="btn" onclick="exportCSV()">Descargar ventas CSV</button></div>
+    <div class="grid stats"><div class="card"><div class="stat-label">Ventas registradas</div><div class="stat-value" id="rSales">C$ 0</div></div><div class="card"><div class="stat-label">Efectivo recibido</div><div class="stat-value" id="rCash">C$ 0</div></div><div class="card"><div class="stat-label">Fiados pendientes</div><div class="stat-value" id="rCredit">C$ 0</div></div><div class="card"><div class="stat-label">Salidas registradas</div><div class="stat-value" id="rExpenses">C$ 0</div></div></div>
+    <div class="notice warn">La ganancia real requiere registrar correctamente el costo de compra de cada producto, todas las ventas, devoluciones y gastos. El total vendido no es lo mismo que la ganancia.</div>
+    <div class="section-head"><h3>Últimas ventas</h3></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Productos</th><th>Forma de pago</th><th>Total</th><th>Recibido</th></tr></thead><tbody id="salesBody"></tbody></table></div>
+  </section>
+
+  <section class="page" id="page-respaldo">
+    <div class="grid two">
+      <div class="card"><h3>☁ Respaldo de información</h3><p class="muted">Por ahora, esta versión guarda los datos en el almacenamiento de este navegador y dispositivo. Descarga copias de seguridad para evitar perder tus registros.</p>
+        <button class="btn primary" onclick="backup()">Descargar copia de seguridad</button>
+        <div class="field" style="margin-top:16px"><label>Restaurar una copia (.json)</label><input type="file" id="restoreFile" accept=".json,application/json" onchange="restoreBackup(event)"></div>
+        <div class="notice warn">No borres los datos del navegador ni cambies de dispositivo sin descargar y guardar una copia.</div>
+      </div>
+      <div class="card"><h3>Cuenta Google y sincronización</h3><p class="muted">Inicia sesión con Google para guardar tus productos, clientes, ventas, fiados y salidas en Firebase. Así podrás recuperar tus datos desde otro dispositivo.</p><div class="tag warn" id="firebaseStatus">Sin conectar</div><p class="small muted" id="firebaseUser">Tus datos siguen guardándose en este dispositivo mientras no inicies sesión.</p><div class="row" style="flex-wrap:wrap;margin-top:12px"><button class="btn primary" id="googleSignIn" onclick="signInGoogle()">Iniciar sesión con Google</button><button class="btn" id="googleSignOut" onclick="signOutGoogle()" style="display:none">Cerrar sesión</button></div><p class="small muted" style="margin-top:12px">La primera vez, tus registros de este dispositivo se copiarán a tu cuenta si la nube está vacía. Si ya hay datos en ambos lugares, se combinarán conservando los registros.</p><p class="small muted">No escribas tu contraseña aquí. Google mostrará su propia pantalla segura de inicio de sesión.</p></div>
+    </div>
+    <div class="card" style="margin-top:15px"><h3>Datos de esta aplicación</h3><div class="between"><span class="muted">Productos</span><b id="bProducts">0</b></div><div class="between"><span class="muted">Clientes</span><b id="bCustomers">0</b></div><div class="between"><span class="muted">Ventas</span><b id="bSales">0</b></div><div class="between"><span class="muted">Salidas</span><b id="bExpenses">0</b></div><button class="btn danger" style="margin-top:16px" onclick="clearAll()">Borrar todos los datos de este dispositivo</button></div>
+  </section>
+</main>
+</div>
+
+<!-- Product modal -->
+<div class="modal-back" id="productModal"><div class="modal"><h3 id="productModalTitle">Agregar producto</h3><form id="productForm" onsubmit="saveProduct(event)"><input type="hidden" id="pId"><div class="form-grid">
+  <div class="field"><label>Nombre del producto *</label><input id="pName" required></div><div class="field"><label>Código / referencia</label><input id="pCode"></div>
+  <div class="field"><label>Categoría</label><select id="pCategory"></select></div><div class="field"><label>Unidad base *</label><select id="pUnit"><option value="unidad">Unidad</option><option value="libra">Libra</option><option value="kg">Kilogramo</option><option value="litro">Litro</option><option value="metro">Metro</option></select></div>
+  <div class="field"><label>Existencia actual (en unidad base) *</label><input id="pStock" type="number" min="0" step=".001" value="0" required></div><div class="field"><label>Existencia mínima</label><input id="pMin" type="number" min="0" step=".001" value="3"></div>
+  <div class="field"><label>Precio de compra por unidad base (C$)</label><input id="pCost" type="number" min="0" step=".01" value="0"></div><div class="field"><label>Precio de venta por unidad base (C$)</label><input id="pPrice" type="number" min="0" step=".01" value="0" required></div>
+  <div class="field"><label>Nombre de paquete/caja (opcional)</label><input id="pPackName" placeholder="Caja, paquete, fardo..."></div><div class="field"><label>Unidades base por paquete</label><input id="pPackSize" type="number" min="0" step=".001" value="0"></div>
+  <div class="field span2"><label>Fotografía del producto</label><div class="row"><img id="pPreview" class="photo-preview" alt="Vista previa"><input id="pPhoto" type="file" accept="image/*" onchange="previewPhoto(event)"></div></div>
+  <div class="field span2"><label>Proveedor (opcional)</label><input id="pSupplier"></div>
+</div><div class="modal-actions"><button type="button" class="btn" onclick="closeModal('productModal')">Cancelar</button><button class="btn primary">Guardar producto</button></div></form></div></div>
+
+<!-- Customer modal -->
+<div class="modal-back" id="customerModal"><div class="modal"><h3>Registrar cliente</h3><form onsubmit="saveCustomer(event)"><input type="hidden" id="cId"><div class="form-grid"><div class="field"><label>Nombre *</label><input id="cName" required></div><div class="field"><label>Teléfono</label><input id="cPhone"></div><div class="field span2"><label>Dirección / referencia</label><input id="cAddress"></div></div><div class="modal-actions"><button type="button" class="btn" onclick="closeModal('customerModal')">Cancelar</button><button class="btn primary">Guardar cliente</button></div></form></div></div>
+
+<!-- Expense modal -->
+<div class="modal-back" id="expenseModal"><div class="modal"><h3>Registrar salida de dinero</h3><form onsubmit="saveExpense(event)"><div class="form-grid"><div class="field"><label>Tipo de salida *</label><select id="eType"><option value="Inversión en productos">Inversión en productos</option><option value="Gastos externos del negocio">Gastos externos del negocio</option><option value="Retiro de la dueña">Retiro de la dueña</option></select></div><div class="field"><label>Monto (C$) *</label><input id="eAmount" type="number" min=".01" step=".01" required></div><div class="field"><label>Fecha *</label><input id="eDate" type="date" required></div><div class="field"><label>Forma de pago</label><select id="eMethod"><option value="Efectivo de caja">Efectivo de caja</option><option value="Transferencia / banco">Transferencia / banco</option></select></div><div class="field span2"><label>Descripción / motivo</label><input id="eDesc" placeholder="Ej. transporte, compra de mercancía..."></div></div><div class="modal-actions"><button type="button" class="btn" onclick="closeModal('expenseModal')">Cancelar</button><button class="btn primary">Guardar salida</button></div></form></div></div>
+
+<!-- Close modal -->
+<div class="modal-back" id="closeModal"><div class="modal"><h3>Cierre de caja diario</h3><form onsubmit="saveClose(event)"><div class="notice" id="closeSummary"></div><div class="field" style="margin-top:14px"><label>Dinero contado físicamente (C$) *</label><input id="countedCash" type="number" min="0" step=".01" required></div><div class="field"><label>Observaciones</label><textarea id="closeNote" rows="2"></textarea></div><div class="modal-actions"><button type="button" class="btn" onclick="closeModal('closeModal')">Cancelar</button><button class="btn primary">Guardar cierre</button></div></form></div></div>
+
+<!-- Product sale modal -->
+<div class="modal-back" id="addCartModal"><div class="modal"><h3 id="addCartTitle">Agregar al carrito</h3><form onsubmit="addToCart(event)"><input type="hidden" id="cartProductId"><div class="field"><label>Presentación</label><select id="cartUnit" onchange="updateCartPrice()"></select></div><div class="field"><label>Cantidad</label><input id="cartQty" type="number" min=".001" step=".001" value="1" required></div><div class="notice" id="cartStockInfo"></div><div class="modal-actions"><button type="button" class="btn" onclick="closeModal('addCartModal')">Cancelar</button><button class="btn primary">Agregar</button></div></form></div></div>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDHHO_GM_r9xXJenYOISL5CqHipCE6E-fI",
+  authDomain: "mipulperia-21b12.firebaseapp.com",
+  databaseURL: "https://mipulperia-21b12-default-rtdb.firebaseio.com",
+  projectId: "mipulperia-21b12",
+  storageBucket: "mipulperia-21b12.firebasestorage.app",
+  messagingSenderId: "750064802554",
+  appId: "1:750064802554:web:63cef76789053fb8ecc743",
+  measurementId: "G-QDY2PM5NV9"
+};
+let firebaseAuth=null, firebaseDB=null, firebaseUser=null, firebaseReady=false;
+try { firebase.initializeApp(firebaseConfig); firebaseAuth=firebase.auth(); firebaseDB=firebase.database(); }
+catch(err) { console.error("Firebase no pudo inicializarse:",err); }
+const CATEGORIES=["Granos básicos","Bebidas","Lácteos","Enlatados y empacados","Limpieza","Higiene personal","Golosinas y snacks","Otros productos"];
+const KEY="mi_pulperia_v1";
+let db=loadDB(), cart=[], photoData="";
+function fresh(){return {products:[],customers:[],sales:[],expenses:[],creditMoves:[],closes:[],opening:{}}}
+function loadDB(){try{return {...fresh(),...JSON.parse(localStorage.getItem(KEY)||"{}")} }catch(e){return fresh()}}
+function saveDB(){localStorage.setItem(KEY,JSON.stringify(db));renderAll();if(firebaseReady&&firebaseUser){firebaseDB.ref("users/"+firebaseUser.uid+"/pulperia").set(db).catch(err=>{console.error(err);setFirebaseStatus("Error al sincronizar. Tus datos siguen en este dispositivo.",true)})}}
+function hasRecords(x){return ["products","customers","sales","expenses","creditMoves","closes"].some(k=>Array.isArray(x[k])&&x[k].length>0)}
+function mergeDB(localData,cloudData){let result={...fresh(),...(cloudData||{}),...(localData||{})};for(let k of ["products","customers","sales","expenses","creditMoves","closes"]){let map=new Map();for(let item of [...((cloudData||{})[k]||[]),...((localData||{})[k]||[])]){let key=item&&item.id?String(item.id):JSON.stringify(item);map.set(key,item)}result[k]=Array.from(map.values())}result.opening={...((cloudData||{}).opening||{}),...((localData||{}).opening||{})};return result}
+function setFirebaseStatus(message,warning=false){let el=document.getElementById("firebaseStatus");if(el){el.textContent=message;el.className=warning?"tag warn":"tag"}}
+function updateFirebaseButtons(){let login=document.getElementById("googleSignIn"),logout=document.getElementById("googleSignOut"),userText=document.getElementById("firebaseUser");if(!login)return;login.style.display=firebaseUser?"none":"inline-block";logout.style.display=firebaseUser?"inline-block":"none";if(userText)userText.textContent=firebaseUser?"Sesión iniciada: "+(firebaseUser.email||"cuenta Google"):"Tus datos siguen guardándose en este dispositivo mientras no inicies sesión."}
+async function signInGoogle(){if(!firebaseAuth){alert("No se pudo cargar Firebase. Revisa tu conexión a internet.");return}try{let provider=new firebase.auth.GoogleAuthProvider();await firebaseAuth.signInWithPopup(provider)}catch(err){console.error(err);alert("No se pudo iniciar sesión. Si estás abriendo el archivo desde Descargas, primero tendremos que publicarlo en Firebase Hosting. Detalle: "+(err.code||err.message))}}
+async function signOutGoogle(){if(firebaseAuth)try{await firebaseAuth.signOut()}catch(err){alert("No se pudo cerrar la sesión: "+err.message)}}
+if(firebaseAuth){firebaseAuth.onAuthStateChanged(async user=>{firebaseUser=user;firebaseReady=false;updateFirebaseButtons();if(!user){setFirebaseStatus("Sin conectar",true);return}setFirebaseStatus("Conectando y revisando tus datos…",true);try{let ref=firebaseDB.ref("users/"+user.uid+"/pulperia"),snap=await ref.once("value"),cloud=snap.val();let local=loadDB();localStorage.setItem(KEY+"_copia_antes_de_google",JSON.stringify(local));if(cloud){db=mergeDB(local,cloud);await ref.set(db)}else{db=local;await ref.set(db)}localStorage.setItem(KEY,JSON.stringify(db));firebaseReady=true;renderAll();setFirebaseStatus("Conectado y sincronizado");updateFirebaseButtons()}catch(err){console.error(err);setFirebaseStatus("No se pudo sincronizar",true);alert("Iniciaste sesión, pero Firebase no permitió leer o guardar los datos. Hay que revisar las reglas de Realtime Database. Tus datos locales se conservaron.")}})}
+function money(n){return "C$ "+(Number(n)||0).toLocaleString("es-NI",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function today(){let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function dateFmt(s){if(!s)return "";let [y,m,d]=s.split("-");return d+"/"+m+"/"+y}
+function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function safe(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById("page-"+page).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));document.getElementById("pageTitle").textContent=({inicio:"Resumen del negocio",inventario:"Inventario",ventas:"Punto de venta",fiados:"Clientes fiados",caja:"Control de caja",gastos:"Salidas de dinero",reportes:"Reportes",respaldo:"Google y respaldo"})[page];renderAll()}
+document.getElementById("nav").addEventListener("click",e=>{let b=e.target.closest("button[data-page]");if(b)go(b.dataset.page)});
+function openModal(id){document.getElementById(id).classList.add("open")}function closeModal(id){document.getElementById(id).classList.remove("open")}
+function setOptions(el,arr,first){el.innerHTML=(first?`<option value="">${first}</option>`:"")+arr.map(x=>`<option>${safe(x)}</option>`).join("")}
+function openProduct(pid){photoData="";document.getElementById("productForm").reset();document.getElementById("pId").value="";document.getElementById("pStock").value=0;document.getElementById("pMin").value=3;document.getElementById("pPackSize").value=0;document.getElementById("pPreview").src="";setOptions(document.getElementById("pCategory"),CATEGORIES);document.getElementById("productModalTitle").textContent=pid?"Editar producto":"Agregar producto";if(pid){let p=db.products.find(x=>x.id===pid);if(!p)return;for(let [k,v] of Object.entries({pId:p.id,pName:p.name,pCode:p.code,pCategory:p.category,pUnit:p.unit,pStock:p.stock,pMin:p.min,pCost:p.cost,pPrice:p.price,pPackName:p.packName,pPackSize:p.packSize,pSupplier:p.supplier})){document.getElementById(k).value=v??""}photoData=p.photo||"";document.getElementById("pPreview").src=photoData}openModal("productModal")}
+function previewPhoto(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{let im=new Image();im.onload=()=>{let c=document.createElement("canvas"),scale=Math.min(1,700/Math.max(im.width,im.height));c.width=im.width*scale;c.height=im.height*scale;c.getContext("2d").drawImage(im,0,0,c.width,c.height);photoData=c.toDataURL("image/jpeg",.72);document.getElementById("pPreview").src=photoData};im.src=r.result};r.readAsDataURL(f)}
+function saveProduct(e){e.preventDefault();let pid=document.getElementById("pId").value,p={id:pid||id(),name:val("pName"),code:val("pCode"),category:val("pCategory"),unit:val("pUnit"),stock:+val("pStock"),min:+val("pMin"),cost:+val("pCost"),price:+val("pPrice"),packName:val("pPackName"),packSize:+val("pPackSize"),supplier:val("pSupplier"),photo:photoData};if(pid){let i=db.products.findIndex(x=>x.id===pid);db.products[i]=p}else db.products.push(p);closeModal("productModal");saveDB()}
+function val(id,v){const el=document.getElementById(id);if(arguments.length>1){el.value=v;return v}return el.value}
+function renderProducts(){let q=(val("productSearch")||"").toLowerCase(),cat=val("categoryFilter");let arr=db.products.filter(p=>(!cat||p.category===cat)&&(!q||(p.name+" "+p.code).toLowerCase().includes(q)));document.getElementById("productsBody").innerHTML=arr.length?arr.map(p=>`<tr><td><div class="product-cell"><img class="thumb" src="${p.photo||''}" onerror="this.style.visibility='hidden'"><div><b>${safe(p.name)}</b><div class="small muted">${safe(p.code||p.unit)}</div></div></div></td><td>${safe(p.category)}</td><td><b>${p.stock} ${safe(p.unit)}${p.stock===1?"":"s"}</b></td><td>${money(p.cost)}</td><td>${money(p.price)}</td><td>${p.stock<=p.min?'<span class="tag red">Existencia baja</span>':'<span class="tag">Disponible</span>'}</td><td><div class="actions"><button class="btn smallbtn" onclick="openProduct('${p.id}')">Editar</button><button class="btn smallbtn danger" onclick="deleteProduct('${p.id}')">Eliminar</button></div></td></tr>`).join(""):`<tr><td colspan="7" class="empty"><b>No hay productos registrados</b>Agrega el primer producto de tu pulpería.</td></tr>`}
+function deleteProduct(pid){if(confirm("¿Eliminar este producto del inventario?")){db.products=db.products.filter(p=>p.id!==pid);saveDB()}}
+function openCustomer(){document.querySelector("#customerModal form").reset();val("cId");openModal("customerModal")}
+function saveCustomer(e){e.preventDefault();let cid=val("cId");let c={id:cid||id(),name:val("cName"),phone:val("cPhone"),address:val("cAddress")};if(cid){let i=db.customers.findIndex(x=>x.id===cid);db.customers[i]=c}else db.customers.push(c);closeModal("customerModal");saveDB()}
+function customerBalance(cid){return db.creditMoves.filter(m=>m.customerId===cid).reduce((s,m)=>s+(m.kind==="fiado"?m.amount:-m.amount),0)}
+function renderCustomers(){let q=(val("customerSearch")||"").toLowerCase();let arr=db.customers.filter(c=>(c.name+" "+c.phone).toLowerCase().includes(q));document.getElementById("customersBody").innerHTML=arr.length?arr.map(c=>`<tr><td><b>${safe(c.name)}</b></td><td>${safe(c.phone||"—")}</td><td class="amount">${money(customerBalance(c.id))}</td><td><div class="actions"><button class="btn smallbtn" onclick="payment('${c.id}')">Registrar abono</button><button class="btn smallbtn" onclick="customerHistory('${c.id}')">Historial</button></div></td></tr>`).join(""):`<tr><td colspan="4" class="empty">No hay clientes registrados.</td></tr>`;let total=db.customers.reduce((s,c)=>s+Math.max(0,customerBalance(c.id)),0);document.getElementById("creditTotal").textContent=money(total);document.getElementById("creditCount").textContent=db.customers.filter(c=>customerBalance(c.id)>0).length;document.getElementById("creditHistory").innerHTML=db.creditMoves.slice().reverse().map(m=>{let c=db.customers.find(c=>c.id===m.customerId);return `<tr><td>${dateFmt(m.date)}</td><td>${safe(c?.name||"Cliente eliminado")}</td><td>${m.kind==="fiado"?"Compra fiada":"Abono"}</td><td>${money(m.amount)}</td><td>${safe(m.note||"")}</td></tr>`}).join("")||`<tr><td colspan="5" class="empty">Todavía no hay movimientos.</td></tr>`}
+function payment(cid){let c=db.customers.find(x=>x.id===cid);let bal=customerBalance(cid);if(bal<=0){alert("Este cliente no tiene saldo pendiente.");return}let a=prompt(`Saldo de ${c.name}: ${money(bal)}\n¿Cuánto abonó?`);if(a===null)return;let n=+a;if(!(n>0)||n>bal){alert("Ingresa un abono mayor que cero y no superior al saldo.");return}db.creditMoves.push({id:id(),customerId:cid,kind:"abono",amount:n,date:today(),note:"Abono recibido"});db.sales.push({id:id(),date:today(),items:[],total:0,received:n,payment:"abono",customerId:cid});saveDB()}
+function customerHistory(cid){let c=db.customers.find(x=>x.id===cid);let ms=db.creditMoves.filter(m=>m.customerId===cid);alert(`${c.name}\nSaldo actual: ${money(customerBalance(cid))}\n\n`+ms.map(m=>`${dateFmt(m.date)} · ${m.kind==="fiado"?"Fiado":"Abono"} · ${money(m.amount)}`).join("\n"))}
+function openExpense(){document.querySelector("#expenseModal form").reset();val("eDate",today());openModal("expenseModal")}
+function saveExpense(e){e.preventDefault();let x={id:id(),type:val("eType"),amount:+val("eAmount"),date:val("eDate"),method:val("eMethod"),desc:val("eDesc")};db.expenses.push(x);closeModal("expenseModal");saveDB()}
+function setOpening(){let t=today(),current=+(db.opening[t]||0),v=prompt("Saldo inicial de caja para hoy (C$):",String(current));if(v===null)return;let n=Number(v);if(!Number.isFinite(n)||n<0){alert("Ingresa un monto válido.");return}db.opening[t]=n;saveDB()}
+function openClose(){let t=today(),calc=cashForDate(t);document.getElementById("closeSummary").innerHTML=`Saldo esperado para ${dateFmt(t)}: <b>${money(calc.expected)}</b><br>Entradas: ${money(calc.in)} · Salidas: ${money(calc.out)}`;val("countedCash",calc.expected.toFixed(2));val("closeNote","");openModal("closeModal")}
+function cashForDate(date){let opening=+(db.opening[date]||0),sales=db.sales.filter(s=>s.date===date).reduce((n,s)=>n+(s.received||0),0),inflow=sales,outs=db.expenses.filter(x=>x.date===date&&x.method==="Efectivo de caja").reduce((n,x)=>n+x.amount,0);return {opening,in:inflow,out:outs,expected:opening+inflow-outs}}
+function saveClose(e){e.preventDefault();let t=today(),c=cashForDate(t),count=+val("countedCash");db.closes.push({id:id(),date:t,expected:c.expected,counted:count,diff:count-c.expected,note:val("closeNote")});db.opening[nextDay(t)]=count;closeModal("closeModal");saveDB()}
+function nextDay(s){let d=new Date(s+"T12:00:00");d.setDate(d.getDate()+1);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function renderCash(){let c=cashForDate(today());text("cashOpening",money(c.opening));text("cashIn",money(c.in));text("cashOut",money(c.out));text("cashExpected",money(c.expected));document.getElementById("closesBody").innerHTML=db.closes.slice().reverse().map(x=>`<tr><td>${dateFmt(x.date)}</td><td>${money(x.expected)}</td><td>${money(x.counted)}</td><td class="${x.diff<0?'negative':x.diff>0?'positive':''}">${money(x.diff)}</td><td>${safe(x.note||"")}</td></tr>`).join("")||`<tr><td colspan="5" class="empty">Aún no hay cierres.</td></tr>`;let moves=[...db.sales.filter(s=>s.received>0).map(s=>({date:s.date,desc:"Venta / abono",type:"Entrada",amount:s.received})),...db.expenses.filter(x=>x.method==="Efectivo de caja").map(x=>({date:x.date,desc:x.type+" · "+x.desc,type:"Salida",amount:x.amount}))].sort((a,b)=>b.date.localeCompare(a.date));document.getElementById("cashMoves").innerHTML=moves.map(x=>`<tr><td>${dateFmt(x.date)}</td><td>${safe(x.desc)}</td><td>${x.type}</td><td class="${x.type==='Entrada'?'positive':'negative'}">${x.type==='Entrada'?'+':'−'}${money(x.amount)}</td></tr>`).join("")||`<tr><td colspan="4" class="empty">Sin movimientos.</td></tr>`}
+function text(id,v){document.getElementById(id).textContent=v}
+function renderExpenses(){let sum=t=>db.expenses.filter(x=>x.type===t).reduce((s,x)=>s+x.amount,0);text("expStock",money(sum("Inversión en productos")));text("expExternal",money(sum("Gastos externos del negocio")));text("expOwner",money(sum("Retiro de la dueña")));document.getElementById("expensesBody").innerHTML=db.expenses.slice().reverse().map(x=>`<tr><td>${dateFmt(x.date)}</td><td>${safe(x.type)}</td><td>${safe(x.desc||"—")}<div class="small muted">${safe(x.method)}</div></td><td>${money(x.amount)}</td><td><button class="btn smallbtn danger" onclick="deleteExpense('${x.id}')">Eliminar</button></td></tr>`).join("")||`<tr><td colspan="5" class="empty">No hay salidas registradas.</td></tr>`}
+function deleteExpense(eid){if(confirm("¿Eliminar esta salida?")){db.expenses=db.expenses.filter(x=>x.id!==eid);saveDB()}}
+function renderSaleChoices(){let q=(val("saleSearch")||"").toLowerCase();let arr=db.products.filter(p=>(p.name+" "+p.code).toLowerCase().includes(q)&&p.stock>0);document.getElementById("saleChoices").innerHTML=arr.slice(0,18).map(p=>`<button onclick="chooseCart('${p.id}')"><div class="row"><img class="thumb" src="${p.photo||''}" onerror="this.style.visibility='hidden'"><div><b>${safe(p.name)}</b><div class="small muted">${p.stock} ${safe(p.unit)}</div></div></div><b>${money(p.price)} / ${safe(p.unit)}</b></button>`).join("")||`<div class="empty" style="grid-column:1/-1">No hay productos disponibles.</div>`}
+function chooseCart(pid){let p=db.products.find(x=>x.id===pid);val("cartProductId",pid);val("cartQty",1);let opts=[{v:"base",label:"Por "+p.unit,factor:1,price:p.price}];if(p.packName&&p.packSize>0)opts.push({v:"pack",label:p.packName+" ("+p.packSize+" "+p.unit+")",factor:p.packSize,price:p.price*p.packSize});document.getElementById("cartUnit").innerHTML=opts.map(o=>`<option value="${o.v}" data-factor="${o.factor}" data-price="${o.price}">${safe(o.label)} — ${money(o.price)}</option>`).join("");text("addCartTitle","Agregar: "+p.name);text("cartStockInfo",`Disponible: ${p.stock} ${p.unit}. El precio se calcula según la presentación seleccionada.`);openModal("addCartModal")}
+function updateCartPrice(){}
+function addToCart(e){e.preventDefault();let p=db.products.find(x=>x.id===val("cartProductId")),o=document.getElementById("cartUnit").selectedOptions[0],factor=+o.dataset.factor,qty=+val("cartQty"),units=qty*factor;if(!p||qty<=0||units>p.stock){alert("No hay suficiente existencia para esa cantidad.");return}let found=cart.find(x=>x.productId===p.id&&x.factor===factor);if(found)found.qty+=qty;else cart.push({productId:p.id,name:p.name,unit:p.unit,qty,factor,unitPrice:p.price,price:+o.dataset.price,packLabel:o.textContent.split(" — ")[0]});closeModal("addCartModal");renderCart()}
+function renderCart(){let total=cart.reduce((s,x)=>s+x.qty*x.price,0);document.getElementById("cartLines").innerHTML=cart.map((x,i)=>`<div class="cart-line"><div><b>${safe(x.name)}</b><div class="small muted">${x.qty} × ${safe(x.packLabel)}</div></div><div class="row"><b>${money(x.qty*x.price)}</b><button class="btn smallbtn danger" onclick="removeCart(${i})">×</button></div></div>`).join("")||`<div class="empty">Agrega productos para iniciar una venta.</div>`;text("cartTotal",money(total));togglePayFields();updateChange()}
+function removeCart(i){cart.splice(i,1);renderCart()}function clearCart(){cart=[];renderCart()}
+function togglePayFields(){let t=val("payType"),credit=t!=="cash";document.getElementById("customerField").style.display=credit?"block":"none";document.getElementById("paidField").style.display=t==="partial"?"block":"none";document.getElementById("cashReceivedField").style.display=t==="cash"?"block":"none";let sel=document.getElementById("saleCustomer");sel.innerHTML=db.customers.map(c=>`<option value="${c.id}">${safe(c.name)}</option>`).join("");updateChange()}
+function updateChange(){let total=cart.reduce((s,x)=>s+x.qty*x.price,0),rec=+val("cashReceived");text("changeDue",money(Math.max(0,rec-total)))}
+document.getElementById("cashReceived").addEventListener("input",updateChange);
+function finishSale(){if(!cart.length){alert("Agrega al menos un producto.");return}let total=cart.reduce((s,x)=>s+x.qty*x.price,0),type=val("payType"),cid=val("saleCustomer"),received=type==="cash"?+val("cashReceived"):type==="partial"?+val("paidAmount"):0;if(type!=="cash"&&!cid){alert("Registra o selecciona un cliente para el fiado.");return}if(type==="cash"&&received<total){alert("El dinero recibido no puede ser menor que el total.");return}if(type==="partial"&&(received<0||received>=total)){alert("El abono debe ser menor que el total y no negativo.");return}for(let x of cart){let p=db.products.find(p=>p.id===x.productId);if(!p||p.stock<x.qty*x.factor){alert("Existencia insuficiente de "+x.name);return}}for(let x of cart){let p=db.products.find(p=>p.id===x.productId);p.stock=+(p.stock-x.qty*x.factor).toFixed(3)}let s={id:id(),date:today(),items:cart.map(x=>({...x})),total,received,payment:type,customerId:cid||null};db.sales.push(s);if(type!=="cash"){let due=total-received;db.creditMoves.push({id:id(),customerId:cid,kind:"fiado",amount:due,date:today(),note:"Venta fiada"})}if(type==="cash"&&received>total){s.change=received-total;s.received=total}cart=[];val("cashReceived","");val("paidAmount","0");saveDB();alert("Venta guardada correctamente.");go("ventas")}
+function renderReports(){let total=db.sales.reduce((s,x)=>s+x.total,0),received=db.sales.reduce((s,x)=>s+x.received,0),credit=db.customers.reduce((s,c)=>s+Math.max(0,customerBalance(c.id)),0),expenses=db.expenses.reduce((s,x)=>s+x.amount,0);text("rSales",money(total));text("rCash",money(received));text("rCredit",money(credit));text("rExpenses",money(expenses));document.getElementById("salesBody").innerHTML=db.sales.slice().reverse().map(s=>`<tr><td>${dateFmt(s.date)}</td><td>${s.items.map(i=>safe(i.name)+" × "+i.qty).join(", ")||"Abono recibido"}</td><td>${s.payment==="cash"?"Efectivo":s.payment==="credit"?"Fiado":s.payment==="partial"?"Abono + fiado":"Abono"}</td><td>${money(s.total)}</td><td>${money(s.received)}</td></tr>`).join("")||`<tr><td colspan="5" class="empty">No hay ventas registradas.</td></tr>`}
+function renderHome(){text("sProducts",db.products.length);text("sStock",money(db.products.reduce((s,p)=>s+p.stock*p.cost,0)));text("sCredit",money(db.customers.reduce((s,c)=>s+Math.max(0,customerBalance(c.id)),0)));let totalCash=db.sales.reduce((s,x)=>s+x.received,0)-db.expenses.filter(x=>x.method==="Efectivo de caja").reduce((s,x)=>s+x.amount,0);text("sCash",money(totalCash));let lows=db.products.filter(p=>p.stock<=p.min);document.getElementById("lowStock").innerHTML=lows.length?lows.slice(0,7).map(p=>`<div class="between" style="padding:7px 0;border-bottom:1px solid var(--line)"><span>${safe(p.name)}</span><span class="tag red">${p.stock} ${safe(p.unit)}</span></div>`).join(""):`<div class="empty">No hay alertas de existencias bajas.</div>`;let recent=[...db.sales.map(s=>({date:s.date,what:"Venta",amount:s.total})),...db.expenses.map(x=>({date:x.date,what:x.type,amount:-x.amount}))].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6);document.getElementById("recent").innerHTML=recent.length?recent.map(x=>`<div class="between" style="padding:7px 0;border-bottom:1px solid var(--line)"><div><b>${safe(x.what)}</b><div class="small muted">${dateFmt(x.date)}</div></div><b class="${x.amount<0?'negative':'positive'}">${x.amount<0?'−':''}${money(Math.abs(x.amount))}</b></div>`).join(""):`<div class="empty">Todavía no hay movimientos registrados.</div>`}
+function renderAll(){let cat=document.getElementById("categoryFilter");if(cat){let current=cat.value;cat.innerHTML='<option value="">Todas las categorías</option>'+CATEGORIES.map(x=>`<option>${x}</option>`).join("");cat.value=current}renderProducts();renderCustomers();renderCash();renderExpenses();renderSaleChoices();renderCart();renderReports();renderHome();text("bProducts",db.products.length);text("bCustomers",db.customers.length);text("bSales",db.sales.length);text("bExpenses",db.expenses.length)}
+function backup(){let blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="mi-pulperia-respaldo-"+today()+".json";a.click();URL.revokeObjectURL(a.href)}
+function restoreBackup(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.products||!x.customers||!x.sales)throw Error();if(confirm("Esto reemplazará los datos actuales. ¿Continuar?")){db={...fresh(),...x};saveDB();alert("Copia restaurada.")}}catch(err){alert("El archivo no parece ser una copia válida de Mi Pulpería.")}};r.readAsText(f);e.target.value=""}
+function clearAll(){if(confirm("¿Seguro que deseas borrar TODOS los datos guardados en este dispositivo? Descarga una copia antes. Esta acción no se puede deshacer.")){localStorage.removeItem(KEY);db=fresh();saveDB()}}
+function exportCSV(){let rows=[["Fecha","Forma de pago","Total","Recibido","Cliente","Productos"],...db.sales.map(s=>[s.date,s.payment,s.total,s.received,db.customers.find(c=>c.id===s.customerId)?.name||"",s.items.map(i=>i.name+" x"+i.qty).join(" | ")])];let csv=rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\n");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}));a.download="ventas-mi-pulperia.csv";a.click();URL.revokeObjectURL(a.href)}
+function showGoogleInfo(){openModal("googleModal")}
+document.getElementById("pCategory").innerHTML=CATEGORIES.map(x=>`<option>${x}</option>`).join("");
+text("today",new Date().toLocaleDateString("es-NI",{weekday:"long",year:"numeric",month:"long",day:"numeric"}));
+renderAll();
+</script>
+
+<script>
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(err => console.warn("No se pudo activar el modo instalable:", err));
+  });
+}
+</script>
+\n</body>
+</html>
